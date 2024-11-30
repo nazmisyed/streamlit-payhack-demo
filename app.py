@@ -9,6 +9,8 @@ st.title("Bank Transaction Demo")
 
 # Input fields for transaction details
 st.header("Enter Transaction Details")
+
+account_number = st.text_input("Email")
 account_number = st.text_input("Account Number")
 transaction_type = st.selectbox("Transaction Type", ["Deposit", "Withdrawal"])
 amount = st.number_input("Amount", min_value=0.0, step=0.01)
