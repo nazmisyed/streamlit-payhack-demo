@@ -2,3 +2,8 @@ python-dotenv
 streamlit==1.38.0
 pip-system-certs
 azure-eventhub 
+shap 
+joblib
+azure-storage-blob>=12.0.0
+azure-identity
+xgboost

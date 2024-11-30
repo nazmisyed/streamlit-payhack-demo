@@ -26,7 +26,5 @@ async def run(email):
             await producer.send_batch([event_data])
             print("Send succeeded")
 
-            time.sleep(2)
-        
         except Exception as e:
             print("Send failed: {e}")
