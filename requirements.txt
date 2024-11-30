@@ -7,3 +7,4 @@ joblib
 azure-storage-blob>=12.0.0
 azure-identity
 xgboost
+matplotlib
