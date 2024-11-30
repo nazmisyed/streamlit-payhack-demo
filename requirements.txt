@@ -1,3 +1,4 @@
 python-dotenv
 streamlit==1.38.0
 pip-system-certs
+azure-eventhub 
