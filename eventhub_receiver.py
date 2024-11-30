@@ -18,9 +18,8 @@ async def run(email):
             conn_str=EVENT_HUB_CONNECTION_STR, eventhub_name=EVENT_HUB_NAME
         )
     
-    email_struct = {"email" : email, "is_fraud" : "1"}
     async with producer:
-        json_message = json.dumps(email_struct)
+        json_message = json.dumps(email)
         event_data = EventData(json_message)
 
         try:

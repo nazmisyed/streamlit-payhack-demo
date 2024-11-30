@@ -113,8 +113,8 @@ with st.form("Enter Transaction Details"):
             "transaction_day_Thursday": transaction_day_Thursday,
             "transaction_day_Tuesday": transaction_day_Tuesday,
             "transaction_day_Wednesday": transaction_day_Wednesday,
-            "email": email
+            "email_address": email
         }
 
-        asyncio.run(run(email))
+        asyncio.run(run(eventhub_dict))
         st.success("Transaction details submitted successfully.")
