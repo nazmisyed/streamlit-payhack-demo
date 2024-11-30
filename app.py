@@ -1,7 +1,11 @@
 import streamlit as st
 from dotenv import load_dotenv
 from eventhub_receiver import run
+from global_model import global_model
 import asyncio
+import shap 
+import matplotlib.pyplot as plt
+
 
 st.set_page_config(layout = "wide")
 
@@ -19,13 +23,14 @@ with st.form("Enter Transaction Details"):
 
     with col1:
         email = st.text_input("email")
+    with col2:
+        amt = st.number_input("Amount", value=281.06, step=0.01)
 
     with st.expander("Other Settings"):
         trans_date_trans_time = st.text_input("Transaction Date & Time", "2019-01-02 01:06:37")
         cc_num = st.number_input("Credit Card Number", value=4613314721966, step=1)
         merchant = st.text_input("Merchant", "fraud_Rutherford-Mertz")
         category = st.selectbox("Category", ["grocery_pos", "misc_net", "food_dining", "travel", "shopping_net"], index=0)
-        amt = st.number_input("Amount", value=281.06, step=0.01)
         first = st.text_input("First Name", "Jason")
         last = st.text_input("Last Name", "Murphy")
         gender = st.selectbox("Gender", ["M", "F"], index=0)
@@ -42,6 +47,7 @@ with st.form("Enter Transaction Details"):
         unix_time = st.number_input("Unix Time", value=1325466397, step=1)
         merch_lat = st.number_input("Merchant Latitude", value=36.430124, format="%.6f")
         merch_long = st.number_input("Merchant Longitude", value=-81.179483, format="%.6f")
+
 
 # Button to submit transaction
     if st.form_submit_button("Submit Transaction"):
@@ -72,3 +78,16 @@ with st.form("Enter Transaction Details"):
 
         asyncio.run(run(transaction_data))
         st.success("Transaction details submitted successfully.")
+
+    with st.expander("SHAP Value"):
+        
+        shap_values, sample_data, explainer = global_model()
+        fig_summary, ax_summary = plt.subplots()
+        shap.summary_plot(shap_values, sample_data, show=False)
+        st.pyplot(fig_summary)
+
+        # Force Plot for a specific transaction
+        st.subheader("SHAP Force Plot for a Sample Transaction")
+        transaction_idx = st.selectbox("Select Transaction Index:", sample_data.index)
+        # shap.force_plot(explainer.expected_value[1], shap_values[transaction_idx].values, sample_data.iloc[transaction_idx])
+        st.pyplot()
